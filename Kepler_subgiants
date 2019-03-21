@@ -1,0 +1,123 @@
+! inlist to 36 Kepler subgiants
+
+! For the sake of future readers of this file (yourself included),
+! ONLY include the controls you are actually using.  DO NOT include
+! all of the other controls that simply have their default values.
+
+&star_job
+      
+      show_log_description_at_start = .false. 
+
+    ! begin with a pre-main sequence model
+      create_pre_main_sequence_model = .true.
+      
+      change_lnPgas_flag = .true.
+      new_lnPgas_flag = .true.
+
+      load_saved_model = .false.
+      saved_model_name = 'start.mod'
+
+      save_model_when_terminate = .true.
+      save_model_filename = 'final.mod'
+     
+      change_initial_net = .true.
+      new_net_name = 'pp_extras.net'
+       
+      write_profile_when_terminate = .true.
+      filename_for_profile_when_terminate = 'final_profile.data'
+
+      kappa_file_prefix = 'OP_gs98'
+      kappa_lowT_prefix = 'lowT_fa05_gs98' ! for lower temperatures.
+
+      set_initial_model_number = .true.
+      initial_model_number = 0
+
+      !pgstar_flag = .true.
+
+
+/ ! end of star_job namelist
+
+
+&controls
+
+      max_model_number = 1700 
+
+      initial_mass = 0.94 
+      initial_z = 0.00100951563983 
+      initial_y = 0.250342655801 
+      mixing_length_alpha = 1.7
+
+      log_directory = 'm0.94z0.00100951563983'
+      photostep = 1000  !photo_interval = 1000
+      profile_interval = 1
+      max_num_profile_models = 10000
+      history_interval = 1
+      terminal_interval = 100
+      write_header_frequency = 100
+      write_model_with_profile = .false.
+      write_pulse_info_with_profile = .true. !write_pulse_data_with_profile = .true.
+      pulse_info_format = 'FGONG'  !pulse_data_format = 'fgong'
+      add_atmosphere_to_pulse_info = .true. !add_atmosphere_to_pulse_data = .false.
+
+
+      !### format_for_FGONG_data
+
+      ! This is the 'wide' FGONG format, as agreed on at the 
+      ! 5th Aarhus RGB workshop (University of Birmingham, UK, October 2015)
+
+      format_for_FGONG_data = '(5E16.9)'
+
+
+      calculate_Brunt_N2 = .true. 
+      num_cells_for_smooth_brunt_B = 0
+
+      use_Type2_opacities = .true.
+     Zbase =  0.00100951563983 
+
+
+      ! timesteps
+      max_timestep = 3.15d15  ! in seconds.  max_timestep <= 0 means no upper limit.            
+      varcontrol_target = 1d-4
+
+      delta_lgTeff_hard_limit = 0.001
+      delta_lgL_limit_L_min = 0.0
+      delta_lgL_hard_limit = 0.004
+
+
+      ! mesh adjustment
+      mesh_delta_coeff = 0.5
+
+
+!# asteroseismology controls
+
+
+      get_delta_nu_from_scaled_solar = .true.
+
+      nu_max_sun = 3090d0
+
+      delta_nu_sun = 135.1d0
+
+      Teff_sun = 5777d0
+
+!# atm
+
+      which_atm_option = 'photosphere_tables'
+
+!# overshooting
+
+     overshoot_f_above_nonburn_core = 0.018
+     overshoot_f0_above_nonburn_core = 0.009
+     overshoot_f_above_nonburn_shell = 0.018
+     overshoot_f0_above_nonburn_shell = 0.009
+     overshoot_f_below_nonburn_shell = 0.018
+     overshoot_f0_below_nonburn_shell = 0.009
+
+     overshoot_f_above_burn_h_core = 0.018
+     overshoot_f0_above_burn_h_core = 0.009
+     overshoot_f_above_burn_h_shell = 0.018
+     overshoot_f0_above_burn_h_shell = 0.009
+     overshoot_f_below_burn_h_shell = 0.018
+     overshoot_f0_below_burn_h_shell = 0.009
+
+
+/ ! end of controls namelist
